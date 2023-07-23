@@ -110,6 +110,7 @@ taskForm.addEventListener('submit', (event) => {
 
 // to logout and to go to the login page
 function logout() {
+  //alert('Log out successful'); // to show alert
   localStorage.removeItem('token');
   window.location.href = '/login';
 }

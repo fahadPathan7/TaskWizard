@@ -12,7 +12,7 @@ const bcrypt = require('bcrypt');
 const path = require('path');
 
 const app = express();
-const port = 3000; // a port number for accessing
+const port = 5500; // a port number for accessing
 
 // connecting with mySql database
 const connection = mysql.createConnection({
@@ -98,6 +98,7 @@ app.post('/login', (req, res) => {
       res.sendStatus(500);
     } else {
       if (results.length === 0) {
+        alert('Invalid username or password!'); // showing alert
         res.status(401).send('Invalid username or password.');
       } else {
         const user = results[0];
@@ -108,6 +109,7 @@ app.post('/login', (req, res) => {
             console.error('Error comparing passwords:', err);
             res.sendStatus(500);
           } else if (!passwordMatch) {
+            alert('Invalid username or password!'); // showing alert
             res.status(401).send('Invalid username or password.');
           } else {
             // Generate a JWT
@@ -120,7 +122,7 @@ app.post('/login', (req, res) => {
   });
 });
 
-// Authorization middleware
+// Authorization
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
