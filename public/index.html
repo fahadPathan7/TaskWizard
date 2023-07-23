@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Concert+One&family=Outfit&display=swap" rel="stylesheet">
+
+  <title>Task Wizard</title>
+</head>
+
+<body>
+  <h1>Your To-Do List</h1>
+  <form id="task-form">
+    <input type="text" id="task-input" placeholder="Write a task" required>
+    <button type="submit">Add Task</button>
+  </form>
+  <ul id="task-list"></ul>
+  <script src="script.js"></script>
+  <script>
+    const token = localStorage.getItem('token');
+    if (token) {
+      // Token is already present, fetch tasks directly
+      fetchTasks();
+    } else {
+      // Token is not present, redirect to the login page
+      window.location.href = '/login';
+    }
+  </script>
+</body>
+
+</html>

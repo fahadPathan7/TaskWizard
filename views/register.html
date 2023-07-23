@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/auth.css">
+  <title>Registration</title>
+</head>
+<body>
+  <h1>Registration</h1>
+  <form id="register-form">
+    <input type="text" id="username-input" placeholder="Username" required>
+    <input type="password" id="password-input" placeholder="Password" required>
+    <p id="error-message" class="error-message"></p>
+    <button type="submit">Register</button>
+  </form>
+  <p>Already have an account? <a href="/login">Login</a></p>
+  <script src="../public/script.js"></script>
+  <script>
+    const registerForm = document.getElementById('register-form');
+    const usernameInput = document.getElementById('username-input');
+    const passwordInput = document.getElementById('password-input');
+    const errorMessage = document.getElementById('error-message');
+
+    registerForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value.trim();
+
+      fetch('/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+      })
+        .then(response => {
+          if (response.status === 409) {
+            return response.text();
+          } else if (response.status === 200) {
+            // Redirect to the login page
+            window.location.href = '/login';
+          } else {
+            throw new Error('Registration failed.');
+          }
+        })
+        .then(data => {
+          errorMessage.textContent = data;
+        })
+        .catch(error => console.error('Error registering user:', error));
+    });
+  </script>
+</body>
+</html>

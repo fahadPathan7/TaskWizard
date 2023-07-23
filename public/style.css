@@ -1,0 +1,85 @@
+body {
+  font-family: 'poppins', sans-serif;
+  margin-left: 370px;
+  margin-right: 370px;
+  margin-top: 80px;
+  padding: 20px;
+  background-color: lightblue;
+  align-items: center;
+  gap: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 25px;
+  font-size: 18px;
+}
+
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #982176;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  margin-left: 10px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 2px solid #461959;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  background-color: #f0f0f0;
+  height: 35px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 17px;
+}
+
+li span {
+  flex: 1;
+  padding: 10px;
+  background-color: #f2f2f2;
+}
+
+li button {
+  padding: 10px;
+  background-color: #213555;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+li button:hover {
+  background-color: #d32f2f;
+}

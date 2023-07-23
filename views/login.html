@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/auth.css">
+
+  <title>Login</title>
+</head>
+<body>
+  <h1>Login</h1>
+
+  <div class="form-container">
+    <form id="login-form">
+      <input type="text" id="username-input" placeholder="Username" required>
+      <input type="password" id="password-input" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+
+  <!-- <form id="login-form">
+    <input type="text" id="username-input" placeholder="Username" required>
+    <input type="password" id="password-input" placeholder="Password" required>
+    <button type="submit">Login</button>
+  </form> -->
+  
+  <p>Don't have an account? <a href="/register">Register</a></p>
+  <script src="../public/script.js"></script>
+  <script>
+    const loginForm = document.getElementById('login-form');
+    const usernameInput = document.getElementById('username-input');
+    const passwordInput = document.getElementById('password-input');
+
+    loginForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value.trim();
+
+      fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Store the token in local storage
+          localStorage.setItem('token', data.token);
+
+          // Redirect to the to-do list page
+          window.location.href = '/';
+        })
+        .catch(error => console.error('Error logging in:', error));
+    });
+  </script>
+</body>
+</html>
