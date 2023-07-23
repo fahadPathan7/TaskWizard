@@ -41,6 +41,31 @@ body {
     cursor: pointer;
   }
 
+  #register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+  }
+
+  #register-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  #register-form button {
+    padding: 10px;
+    background-color: #2196F3;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
 
   h1 {
     text-align: center;
