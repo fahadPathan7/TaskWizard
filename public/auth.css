@@ -39,6 +39,7 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-weight: bold;
   }
 
   #register-form {
@@ -64,11 +65,13 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-weight: bold;
   }
 
 
   h1 {
     text-align: center;
+    color: #461959;
   }
 
   form {

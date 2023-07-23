@@ -11,6 +11,7 @@ body {
 
 h1 {
   text-align: center;
+  color: #461959;
 }
 
 form {
@@ -81,5 +82,19 @@ li button {
 }
 
 li button:hover {
+  background-color: #0D1282;
+}
+
+#logout-btn {
+  font-size: 16px;
+  background-color: #8C3333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-left: 0px;
+}
+
+#logout-btn:hover {
   background-color: #d32f2f;
 }

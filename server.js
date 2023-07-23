@@ -1,4 +1,9 @@
+/*
+For handling database.
+retrieve, add, update, delete
+*/
 
+// creating variables
 const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
@@ -7,9 +12,9 @@ const bcrypt = require('bcrypt');
 const path = require('path');
 
 const app = express();
-const port = 3000;
+const port = 3000; // a port number for accessing
 
-// MySQL connection
+// connecting with mySql database
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'fahadpathan',
@@ -17,11 +22,12 @@ const connection = mysql.createConnection({
   database: 'taskwizard'
 });
 
+// checking connection
 connection.connect((err) => {
   if (err) {
-    console.error('Error connecting to MySQL:', err);
+    console.error(err);
   } else {
-    console.log('Connected to MySQL database.');
+    console.log('Database Connected');
   }
 });
 
@@ -29,18 +35,19 @@ connection.connect((err) => {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Serve static files from the "public" directory
+// static files from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Serve the registration page
+// the registration page
 app.get('/register', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'register.html'));
 });
-// Handle registration form submission
+
+// new registration handle
 app.post('/register', (req, res) => {
   const { username, password } = req.body;
 
-  // Check if the username is already taken
+  // checking already registered user
   connection.query('SELECT * FROM users WHERE username = ?', [username], (err, results) => {
     if (err) {
       console.error('Error retrieving user:', err);
@@ -49,22 +56,22 @@ app.post('/register', (req, res) => {
       if (results.length > 0) {
         res.status(409).send('Username already taken.');
       } else {
-        // Hash the password
+        // Hashing the password
         bcrypt.hash(password, 10, (err, hashedPassword) => {
           if (err) {
             console.error('Error hashing password:', err);
             res.sendStatus(500);
           } else {
-            // Store the user in the database
+            // Storing the user in the database
             connection.query('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashedPassword], (err) => {
               if (err) {
                 console.error('Error registering user:', err);
                 res.sendStatus(500);
               } else {
-                // Generate a JWT
+                // Generating a JWT
                 const token = jwt.sign({ username: username }, 'your_secret_key');
 
-                // Send the token and success message
+                // Sending the token and success message
                 res.json({ token, message: 'Registration successful!' });
               }
             });
@@ -75,12 +82,12 @@ app.post('/register', (req, res) => {
   });
 });
 
-// Serve the login page
+// for login page
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'login.html'));
 });
 
-// Handle login form submission
+// checking the login
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
 
@@ -95,7 +102,7 @@ app.post('/login', (req, res) => {
       } else {
         const user = results[0];
 
-        // Compare the password with the stored hashed password
+        // comparing password
         bcrypt.compare(password, user.password, (err, passwordMatch) => {
           if (err) {
             console.error('Error comparing passwords:', err);
@@ -132,7 +139,7 @@ function authenticateToken(req, res, next) {
   });
 }
 
-// Protected route - Fetch tasks
+// fetching tasks
 app.get('/tasks', authenticateToken, (req, res) => {
   const userId = req.user.userId;
 
@@ -145,12 +152,13 @@ app.get('/tasks', authenticateToken, (req, res) => {
     }
   });
 });
-// Protected route - Add a task
+
+// adding a new task
 app.post('/tasks', authenticateToken, (req, res) => {
 
   const userId = req.user.userId;
   const task = req.body.task;
-console.log(userId);
+  console.log(userId);
   connection.query('INSERT INTO tasks (task, user_id) VALUES (?, ?)', [task, userId], (err) => {
     if (err) {
       console.error('Error adding task:', err);
@@ -162,7 +170,7 @@ console.log(userId);
 });
 
 
-// Protected route - Update a task
+// updating a task
 app.put('/tasks/:id', authenticateToken, (req, res) => {
   const taskId = req.params.id;
   const userId = req.user.userId;
@@ -178,7 +186,7 @@ app.put('/tasks/:id', authenticateToken, (req, res) => {
   });
 });
 
-// Protected route - Delete a task
+// deleting a task
 app.delete('/tasks/:id', authenticateToken, (req, res) => {
   const taskId = req.params.id;
   const userId = req.user.userId;
@@ -193,7 +201,8 @@ app.delete('/tasks/:id', authenticateToken, (req, res) => {
   });
 });
 
+
 // Start the server
 app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+  console.log(`Server is active on port ${port}`);
 });

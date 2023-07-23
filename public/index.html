@@ -11,26 +11,35 @@
   <link href="https://fonts.googleapis.com/css2?family=Concert+One&family=Outfit&display=swap" rel="stylesheet">
 
   <title>Task Wizard</title>
+
 </head>
 
 <body>
+
   <h1>Your To-Do List</h1>
   <form id="task-form">
     <input type="text" id="task-input" placeholder="Write a task" required>
     <button type="submit">Add Task</button>
   </form>
   <ul id="task-list"></ul>
+
+  <div>
+    <button id="logout-btn">Logout</button>
+  </div>
+
+
   <script src="script.js"></script>
   <script>
     const token = localStorage.getItem('token');
     if (token) {
-      // Token is already present, fetch tasks directly
+      // token is present, fetching task
       fetchTasks();
     } else {
-      // Token is not present, redirect to the login page
+      // if token is not present, start login page
       window.location.href = '/login';
     }
   </script>
+
 </body>
 
 </html>
